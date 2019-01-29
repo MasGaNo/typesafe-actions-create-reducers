@@ -1,32 +1,34 @@
 import { ActionType } from "typesafe-actions";
-import { ActionCreator, TypeMeta } from "typesafe-actions/dist/types";
+import { ActionCreator, TypeMeta, StringType, ActionCreatorMap } from "typesafe-actions/dist/types";
+
+type TActionCreator = ActionCreator<StringType> | ActionCreatorMap<{}>;
 
 /**
  * Like getType, but for definition.
  */
-export type GetType<T extends ActionCreator<any> & TypeMeta<any>> = ReturnType<T> extends {type: any} ? ReturnType<T>['type'] : never;
+export type GetType<T extends ActionCreator<StringType> & TypeMeta<StringType>> = ReturnType<T> extends {type: StringType} ? ReturnType<T>['type'] : never;
 
 /**
  * Get the list of all type from a list of actions
  */
-export type GetActionType<T extends ActionType<any>> = T['type'];
+export type GetActionType<T extends ActionType<TActionCreator>> = T['type'];
 
 /**
  * Get the complete action from a specific type
  */
-export type GetAction<T extends ActionType<any>, P extends GetActionType<T>> = T extends { type: P } ? T : never;
+export type GetAction<T extends ActionType<TActionCreator>, P extends GetActionType<T>> = T extends { type: P } ? T : never;
 
 /**
  * Return an action reducer definition
  */
-export type ActionReducer<S, AT extends ActionType<any>, P extends GetActionType<AT>> = (state: S, action: GetAction<AT, P>) => S;
+export type ActionReducer<S, AT extends ActionType<TActionCreator>, P extends GetActionType<AT>> = (state: S, action: GetAction<AT, P>) => S;
 
 /**
  * Create a reducers from a defined handlerMap
  * @param initialState 
  * @param handlersMap 
  */
-export function createReducers<S, T extends ActionType<any>>(
+export function createReducers<S, T extends ActionType<TActionCreator>>(
     initialState: S,
     handlersMap: {
         [P in GetActionType<T>]?: ActionReducer<S, T, P>;
@@ -34,7 +36,6 @@ export function createReducers<S, T extends ActionType<any>>(
 ) {
     return function <P extends GetActionType<T>>(state: S = initialState, action: GetAction<T, P>) {
         if (handlersMap.hasOwnProperty(action.type)) {
-            // Cannot find a way to handle this error.
             return handlersMap[action.type]!(state, action);
         }
         return state;
