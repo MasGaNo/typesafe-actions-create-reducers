@@ -1,0 +1,30 @@
+{
+  "name": "typesafe-actions-create-reducers",
+  "version": "1.0.0",
+  "description": "Just a repository to illustrate a requested feature",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasGaNo/typesafe-actions-create-reducers.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MasGaNo/typesafe-actions-create-reducers/issues"
+  },
+  "homepage": "https://github.com/MasGaNo/typesafe-actions-create-reducers#readme",
+  "devDependencies": {
+    "@types/react": "16.7.22",
+    "@types/react-redux": "7.0.1",
+    "typescript": "^3.1.6"
+  },
+  "dependencies": {
+    "react": "16.7.0",
+    "react-redux": "6.0.0",
+    "typesafe-actions": "^3.0.0",
+    "utility-types": "^3.4.1"
+  }
+}
