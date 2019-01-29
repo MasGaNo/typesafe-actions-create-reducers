@@ -6,7 +6,7 @@ type TActionCreator = ActionCreator<StringType> | ActionCreatorMap<{}>;
 /**
  * Like getType, but for definition.
  */
-export type GetType<T extends ActionCreator<StringType> & TypeMeta<StringType>> = ReturnType<T> extends {type: StringType} ? ReturnType<T>['type'] : never;
+export type GetType<T extends ActionCreator<StringType>> = ReturnType<T> extends {type: StringType} ? ReturnType<T>['type'] : never;
 
 /**
  * Get the list of all type from a list of actions
